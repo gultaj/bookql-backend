@@ -71,7 +71,7 @@ type Mutation {
         link: String
         featured: Boolean
         category: Int!
-    ): Book @update\
+    ): Book @update
     deleteBook(
         id: ID!
     ): Book @delete

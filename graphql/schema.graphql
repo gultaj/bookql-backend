@@ -10,6 +10,7 @@ type Query {
 
     books: [Book] @all
     book(id: ID @eq): Book @find
+    booksByFeatured(featured: Boolean! @eq): [Book] @all
     
     categories: [Category] @all
     category(id: ID @eq): Category @find
@@ -38,4 +39,40 @@ type Book {
     link: String
     featured: Boolean
     category: Category! @belongsTo
+}
+
+type Mutation {
+    createCategory(
+        name: String! @rules(apply: ["required", "unique:categories,name"])
+    ): Category @create
+    updateCategory(
+        id: ID!,
+        name: String! @rules(apply: ["required", "unique:categories,name"])
+    ): Category @update
+    deleteCategory(
+        id: ID!
+    ): Category @delete
+
+    createBook(
+        title: String! @rules(apply: ["required"]),
+        author: String! @rules(apply: ["required"]),
+        image: String
+        description: String
+        link: String
+        featured: Boolean
+        category: Int!
+    ): Book @create
+    updateBook(
+        id: ID! @rules(apply: ["required"]),
+        title: String! @rules(apply: ["required"]),
+        author: String! @rules(apply: ["required"]),
+        image: String
+        description: String
+        link: String
+        featured: Boolean
+        category: Int!
+    ): Book @update\
+    deleteBook(
+        id: ID!
+    ): Book @delete
 }
